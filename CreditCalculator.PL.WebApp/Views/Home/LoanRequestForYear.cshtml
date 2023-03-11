@@ -1,0 +1,48 @@
+﻿@model CreditCalculator.PL.WebApp.ViewModels.LoanViewModel
+
+@{
+    ViewData["Title"] = "LoanRequestForYear";
+}
+
+<h1>LoanRequestForYear</h1>
+
+<h4>LoanViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="LoanRequestForYear" method='post'>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Sum" class="control-label"></label>
+                <input asp-for="Sum" class="form-control" value="10000" />
+                <span asp-validation-for="Sum" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Deadline" class="control-label"></label>
+                <input asp-for="Deadline" class="form-control" value="12" />
+                <span asp-validation-for="Deadline" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Rate" class="control-label"></label>
+                <input asp-for="Rate" class="form-control" value="3" />
+                <span asp-validation-for="Rate" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="Step" class="control-label"></label>
+                <input asp-for="Step" class="form-control" value="1"/>
+                <span asp-validation-for="Step" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
