@@ -19,6 +19,9 @@ namespace CreditCalculator.DAL.Server
 
     internal static class CalculateCredit
     {
+        //Проблемы есть с подсчетом чисел с плавающей точкой, поэтом обернул в Round,
+        //но думаю следовало мне decimel использовать
+
         internal static IEnumerable<PaymentRow> PaymentScheduleAnnuitet(double SumCredit, double InterestRateYear, int CreditPeriod) // Метод расчета Аннуитетного платежа
         {
             double InterestRateMonth = InterestRateYear / 12 / 100;
@@ -41,8 +44,8 @@ namespace CreditCalculator.DAL.Server
             DateTime date = DateTime.Now;
             for (int i = 0; i < CreditPeriod; ++i)
             {
-                double procent = Math.Round(SumCreditOperation * (InterestRateYear / 100) / 12, 2);
-                SumCreditOperation -= Payment - procent;
+                double procent = Math.Round(SumCreditOperation * InterestRateMonth, 2);
+                SumCreditOperation = Math.Round(SumCreditOperation - Math.Round(Payment - procent,2), 2);
 
                 yield return new PaymentRow(
                     i + 1,
@@ -58,7 +61,7 @@ namespace CreditCalculator.DAL.Server
                 //dgvGrafik[2, i].Value = (Payment - procent).ToString("N2"); //Платеж за основной долг
                 //dgvGrafik[3, i].Value = procent.ToString("N2"); //Платеж процента
                 //dgvGrafik[4, i].Value = SumCreditOperation.ToString("N2"); //Основной остаток
-                ItogCreditSumOperation -= Payment;
+                ItogCreditSumOperation = Math.Round(ItogCreditSumOperation - Payment, 2);
                 //ItogPlus = Convert.ToDouble(dgvGrafik[4, i].Value);
             }
             //itogOverpayment.Text = (ItogCreditSum - SumCredit + ItogPlus).ToString("N2");
@@ -85,8 +88,8 @@ namespace CreditCalculator.DAL.Server
             DateTime date = DateTime.Now;
             for (int i = 0; i < newCreditPeriod; ++i)
             {
-                double procent = Math.Round(SumCreditOperation * (InterestRateYear / 100) / 30, 2);
-                SumCreditOperation -= Payment - procent;
+                double procent = Math.Round(SumCreditOperation * InterestRateMonth, 2);
+                SumCreditOperation = Math.Round(SumCreditOperation - Math.Round(Payment - procent, 2), 2);
 
                 yield return new PaymentRow(
                     i + 1,
@@ -102,7 +105,7 @@ namespace CreditCalculator.DAL.Server
                 //dgvGrafik[2, i].Value = (Payment - procent).ToString("N2"); //Платеж за основной долг
                 //dgvGrafik[3, i].Value = procent.ToString("N2"); //Платеж процента
                 //dgvGrafik[4, i].Value = SumCreditOperation.ToString("N2"); //Основной остаток
-                ItogCreditSumOperation -= Payment;
+                ItogCreditSumOperation = Math.Round(ItogCreditSumOperation - Payment, 2);
                 //ItogPlus = Convert.ToDouble(dgvGrafik[4, i].Value);
             }
             //itogOverpayment.Text = (ItogCreditSum - SumCredit + ItogPlus).ToString("N2");

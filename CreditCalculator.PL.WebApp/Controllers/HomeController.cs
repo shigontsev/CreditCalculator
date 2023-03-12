@@ -1,7 +1,8 @@
-﻿//using CreditCalculator.Entities;
-using CreditCalculator.PL.WebApp.Models;
+﻿using CreditCalculator.PL.WebApp.Models;
 using CreditCalculator.PL.WebApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System;
 using System.Diagnostics;
 
 namespace CreditCalculator.PL.WebApp.Controllers
@@ -28,24 +29,32 @@ namespace CreditCalculator.PL.WebApp.Controllers
             return View();
         }
 
-        //[HttpGet]
         public IActionResult LoanRequestForYear()
         {
             return View();
         }
 
-        [HttpPost]
-        //public IEnumerable<PaymentRowViewModel> Credit(string a)
+        [HttpPost]        
         public IActionResult LoanRequestForYear(LoanViewModel loan)
-        {
-            return RedirectToAction("СreditPlan", "Home", 
-                new 
-                { 
-                    sum = loan.Sum, 
-                    deadline = loan.Deadline, 
-                    rate = loan.Rate, 
+        {            
+            if (ModelState.IsValid)
+                return RedirectToAction("СreditPlan", "Home",
+                new
+                {
+                    sum = loan.Sum,
+                    deadline = loan.Deadline,
+                    rate = loan.Rate,
                     forYear = true
                 });
+
+            if (loan.Sum <= 0)
+                ModelState.AddModelError(nameof(loan.Sum), nameof(loan.Sum) + " - не может быть <= 0.");
+            if (loan.Deadline <= 0)
+                ModelState.AddModelError(nameof(loan.Deadline), nameof(loan.Deadline) + " - не может быть <= 0.");
+            if (loan.Rate <= 0)
+                ModelState.AddModelError(nameof(loan.Rate), nameof(loan.Rate) + " - не может быть <= 0.");
+            
+            return View(loan);
 
         }
 
@@ -54,11 +63,11 @@ namespace CreditCalculator.PL.WebApp.Controllers
             return View();
         }
 
-        [HttpPost]
-        //public IEnumerable<PaymentRowViewModel> Credit(string a)
+        [HttpPost]        
         public IActionResult LoanRequestForMounth(LoanViewModel loan)
         {
-            return RedirectToAction("СreditPlan", "Home",
+            if (ModelState.IsValid)
+                return RedirectToAction("СreditPlan", "Home",
                 new
                 {
                     sum = loan.Sum,
@@ -67,12 +76,24 @@ namespace CreditCalculator.PL.WebApp.Controllers
                     step = loan.Step,
                     forYear = false
                 });
+            if (loan.Sum <= 0)
+                ModelState.AddModelError(nameof(loan.Sum), nameof(loan.Sum) + " - не может быть <= 0.");
+            if (loan.Deadline <= 0)
+                ModelState.AddModelError(nameof(loan.Deadline), nameof(loan.Deadline) + " - не может быть <= 0.");
+            if (loan.Rate <= 0)
+                ModelState.AddModelError(nameof(loan.Rate), nameof(loan.Rate) + " - не может быть <= 0.");
+            if (loan.Step <= 0)
+                ModelState.AddModelError(nameof(loan.Step), nameof(loan.Step) + " - не может быть <= 0.");
+            if (loan.Step > loan.Deadline)
+                ModelState.AddModelError(nameof(loan.Step), nameof(loan.Step) + " - не может быть > Срока займа.");
 
+            return View(loan);
         }
 
-        //[HttpGet]
         public IActionResult СreditPlan(double sum, int deadline, double rate, int step, bool forYear)
         {
+            ViewBag.Sum = sum;
+            
             IEnumerable<PaymentRowViewModel> list;
             if (forYear) {
                 list = _credit.GetPaymentListByYear(
@@ -83,8 +104,9 @@ namespace CreditCalculator.PL.WebApp.Controllers
                 list = _credit.GetPaymentListByMounth(
                 new LoanViewModel(sum, deadline, rate, step));
             }
-            
-            
+            ViewBag.TypeInfoCalculate = forYear? "за годичный расчет": "за месячный расчет";
+            ViewBag.SumLoan = Math.Round(list.First().Sum * list.Count(), 2);
+
             return View(list);
         }
 
