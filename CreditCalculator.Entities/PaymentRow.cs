@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CreditCalculator.Entities
+﻿namespace CreditCalculator.Entities
 {
     public class PaymentRow
     {
@@ -84,14 +78,5 @@ namespace CreditCalculator.Entities
             SumByPercent = sumByPercent;
             BalanceOwed = balanceOwed;
         }
-
-        /*
-         * - "Номер платежа";
-- "Дата платежа"; 
-- "Размер платежа по телу"; 
-- "Размер платежа по %"; 
-- "Остаток основного долга".
-
-         */
     }
 }

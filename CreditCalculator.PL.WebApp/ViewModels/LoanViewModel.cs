@@ -1,9 +1,4 @@
-﻿using CreditCalculator.Entities;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System.ComponentModel.DataAnnotations;
-using System.Configuration;
-using System.Xml.Linq;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace CreditCalculator.PL.WebApp.ViewModels
 {
@@ -86,14 +81,14 @@ namespace CreditCalculator.PL.WebApp.ViewModels
         {
             if (value is int valueInt)
             {
-                if (valueInt > 0)    // если имя не равно admin
+                if (valueInt > 0)
                     return true;
                 else
                     ErrorMessage = "Значение  должно быть > 0";
             }
             if (value is double valueDouble)
             {
-                if (valueDouble > 0)    // если имя не равно admin
+                if (valueDouble > 0)
                     return true;
                 else
                     ErrorMessage = "Значение должно быть > 0";

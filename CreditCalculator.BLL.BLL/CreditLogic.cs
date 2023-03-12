@@ -1,11 +1,6 @@
 ﻿using CreditCalculator.BLL.Interfaces;
 using CreditCalculator.DAL.Interfaces;
 using CreditCalculator.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CreditCalculator.BLL.BLL
 {
