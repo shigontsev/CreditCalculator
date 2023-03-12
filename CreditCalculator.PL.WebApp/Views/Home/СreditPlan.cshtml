@@ -4,14 +4,11 @@
     ViewData["Title"] = "СreditPlan";
 }
 
-<h1>СreditPlan</h1>
+<h1>СreditPlan @ViewData["TypeInfoCalculate"]</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
+<table class="table table-bordered">
+    <thead >
+        <tr class="table-dark">
             <th>
                 @Html.DisplayNameFor(model => model.N)
             </th>
@@ -48,12 +45,14 @@
             <td>
                 @Html.DisplayFor(modelItem => item.BalanceOwed)
             </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+        </tr>}
     </tbody>
 </table>
+<ul class="list-group list-group-flush">
+    <li class="list-group-item list-group-item-info">
+        Сумма займа : @ViewData["Sum"];
+    </li>
+    <li class="list-group-item list-group-item-success">
+        Итоговая сумма к выплате : @ViewData["SumLoan"];
+    </li>
+</ul>
