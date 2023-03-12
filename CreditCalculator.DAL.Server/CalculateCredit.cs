@@ -2,6 +2,8 @@
 
 namespace CreditCalculator.DAL.Server
 {
+    //Возможно было бы лучше вытащить в отдельный проект в папке Common,
+    //для всех различных функций расчета
     internal static class CalculateCredit
     {
         //Проблемы есть с подсчетом чисел с плавающей точкой, поэтом обернул в Round,

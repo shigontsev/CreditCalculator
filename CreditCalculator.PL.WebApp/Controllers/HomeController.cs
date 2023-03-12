@@ -1,8 +1,6 @@
 ﻿using CreditCalculator.PL.WebApp.Models;
 using CreditCalculator.PL.WebApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System;
 using System.Diagnostics;
 
 namespace CreditCalculator.PL.WebApp.Controllers
@@ -20,11 +18,6 @@ namespace CreditCalculator.PL.WebApp.Controllers
         }
 
         public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
         {
             return View();
         }

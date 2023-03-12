@@ -1,6 +1,5 @@
 ﻿using CreditCalculator.DAL.Interfaces;
 using CreditCalculator.Entities;
-using Microsoft.VisualBasic;
 
 namespace CreditCalculator.DAL.Server
 {
